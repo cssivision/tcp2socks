@@ -25,7 +25,8 @@ async fn main() -> io::Result<()> {
 
     let listener = TcpListener::bind(local_addr).await?;
     loop {
-        let (socket, _) = listener.accept().await?;
+        let (socket, addr) = listener.accept().await?;
+        log::debug!("remote address: {}", addr);
         let host = config.host.clone();
         let port = config.port;
         tokio::spawn(async move {
